@@ -112,3 +112,16 @@ function drawBricks() {
         })
     })
 }
+
+//NOTE - Move the paddle on canvas
+function movePaddle() { //Every time you start playing on the canvas 
+    paddle.x += paddle.dx // Paddle with not move until we use the keyboard events.
+
+    //Wall selection
+    if(paddle.x + paddle.w > canvas.width) {
+        paddle.x = canvas.width - paddle.w
+    }
+}
+
+
+
