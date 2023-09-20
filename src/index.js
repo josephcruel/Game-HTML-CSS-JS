@@ -27,6 +27,7 @@
 
  // ANCHOR - Canvas DOM Selector
  const canvas = document.getElementById('canvas')
+ const ctx = canvas.getContext('2d')
 
  let score = 0 //setting out scoreboard to zero 
 
@@ -43,7 +44,6 @@
  }
 
  // Create Paddle 
-
  const paddle = {
     x: canvas.width / 2 -40, // We are taking half width of the paddle 
     y: canvas.height / -20, // Center this paddle in the middle.
@@ -54,7 +54,6 @@
  }
 
  // Create Brick 
-
  const brickInfo = {
     w: 70, // Bricks will share the same properties 
     h: 20,
@@ -65,7 +64,6 @@
  }
 
  // Create brick array 
-
  const bricks = [] //initiate bricks array 
  for(let i = 0; i < brickRowCount; i++) { // loop through the array row 
     bricks[i] = [] // Set the row bricks iteration to an empty array
@@ -76,4 +74,41 @@
     }
  }
 
+ console.log(bricks)
 
+// Create and Draw the ball on the canvas
+function dreaBall() {
+    ctx.beginPath() // We are going to create a path 
+    ctx.arc(ball.x, ball.y, ball.size, 0, Math.PI * 2) // Drew an arc to build a ball
+    ctx.fillStyle = '#0095dd' // Style the ball arc property
+    ctx.fill()
+    ctx.closePath()
+}
+
+//Create and Draw Paddle on the canvas
+function drawPaddle() {
+    ctx.beginPath()
+    ctx.rect(paddle.x, paddle.y, paddle.w, paddle.h)
+    ctx.fillStyle = '#0095dd'
+    ctx.fill
+    ctx.closePath()
+}
+
+// Draw and Design the score board 
+function drawScore() {
+    ctx.font = '20px Arial'
+    ctx.fillText(`Score: ${score}`, canvas.width - 100, 30)
+}
+
+// Bricks Design on the canvas
+function drawBricks() {
+    bricks.forEach(column => {
+        column.forEach(brick => {
+            ctx.beginPath()
+                ctx.rect(brick.x, brick.y, brick.w, brick.h)
+                ctx.fillStyle = brick.visible ? '#0095dd' : 'transparent' // This will be conditional
+                ctx.fill()
+                ctx.closePath()  
+        })
+    })
+}
