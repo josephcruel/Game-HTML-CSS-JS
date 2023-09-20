@@ -19,12 +19,28 @@
  * 
  */
 
+
+// ANCHOR - DOM Selectors
+ const rulesBtn = document.getElementById('rules-btn')
+ const closeBtn = document.getElementById('close-btn')
+ const rules = document.getElementById('rules')
+
+ // ANCHOR - Canvas DOM Selector
+ const canvas = document.getElementById('canvas')
+
  let score = 0 //setting out scoreboard to zero 
 
  const brickRowCount = 9 
  const brickColumnCount = 5
 
- const ball = {}
+ const ball = {
+    x: canvas.width / 2, //Start displaying in the middle of the screen
+    y: canvas.height / 2, //Start displaying in the middle of the screen
+    size: 10, // Ball size
+    speed: 4,  // Animation Speed props 
+    dx: 4, // Animation Direction 
+    dy: -4 // Animation Direction with (-) so it does not move down the bottom line of our screens
+ }
 
  // Create Paddle 
 
@@ -38,4 +54,4 @@
 
  const bricks = []
 
- 
+
