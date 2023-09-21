@@ -113,7 +113,7 @@ function drawBricks() {
     })
 }
 
-//NOTE - Move the paddle on canvas
+// NOTE - Move the paddle on canvas
 function movePaddle() { //Every time you start playing on the canvas 
     paddle.x += paddle.dx // Paddle with not move until we use the keyboard events.
 
@@ -121,7 +121,52 @@ function movePaddle() { //Every time you start playing on the canvas
     if(paddle.x + paddle.w > canvas.width) {
         paddle.x = canvas.width - paddle.w
     }
+
+    if(paddle.x < 0) { // 0 from the X-axis and this is for the game boarders detection
+        paddle.x = 0
+    }
 }
 
+// NOTE - Moving the ball on the canvas
+function moveBall() {
+    ball.x += ball.dx // append the ball on the X-axis
+    ball.y += ball.dy // append the ball on the Y-axis
 
+    //Wall collision (right/left)
+    if(ball.x + ball.size > canvas.width || ball.x - ball.size < 0) {// right and left wall 
+        ball.dx *= - 1 // The reason we are doing this statement is to reverse the ball to go the other way.
+    }
+
+    if(ball.y + ball.size > canvas.height || ball.y - ball.size < 0) {
+        ball.dy *= -1
+    }
+
+    // Paddle collision
+    if(
+        ball.x - ball.size > paddle.x && // checking the left side of my canvas
+        ball.x + ball.size < paddle.x + paddle.w && 
+        ball.y + ball.size > paddle .y 
+    ) {
+        ball.dy = - ball.speed //reverse the ball object and bounce off the paddle with same speed
+    }
+
+    // NOTE - brick collision 
+    bricks.forEach(column => {
+        column.forEach(brick => {
+            if(brick.visible) {
+                if(
+                    ball.x - ball.size > brick.x && // checking the left side bricks
+                    ball.x + ball.size < brick.x + brick.w &&// checking the right side bricks
+                    ball.y + ball.size > brick.y && // Top brick
+                    ball.y - ball.size < brick.y + brick.h // Bottom brick
+                 ){
+                    ball.y *= -1 // bounce off the brick
+                    brick.visible = false // once it bounce off the brick make 
+
+                    // increaseScore() this will change the score status
+                 }
+            }
+        })
+    })
+}   
 
